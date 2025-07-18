@@ -1,0 +1,22 @@
+{
+  "name": "bad-apple-bin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "convert.ts",
+  "scripts": {
+    "convert": "node convert.ts"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.3",
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "@types/pngjs": "^6.0.5"
+  }
+}
