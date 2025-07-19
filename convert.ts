@@ -7,8 +7,10 @@ dotenv.config({ path: "./config.env" });
 const WIDTH = parseInt(process.env.WIDTH!);
 const HEIGHT = parseInt(process.env.HEIGHT!);
 const THRESHOLD = parseInt(process.env.THRESHOLD!);
+const VIDEO_DURATION = parseFloat(process.env.VIDEO_DURATION! ?? 0);
 const FRAME_DIR = process.env.FRAMES_DIR!;
 const BIN_OUTPUT = process.env.BIN_OUTPUT!;
+const META_OUTPUT = BIN_OUTPUT.replace(/\.bin$/, ".json");
 
 function packBits(bits: number[]): Uint8Array {
   const packed = new Uint8Array(Math.ceil(bits.length / 8));
@@ -60,7 +62,21 @@ for (const file of files) {
 }
 
 const output = Buffer.concat(allFrames);
+const metadata = {
+  width: WIDTH,
+  height: HEIGHT,
+  threshold: THRESHOLD,
+  frames: files.length,
+  duration: VIDEO_DURATION,
+  fps: VIDEO_DURATION > 0 ? files.length / VIDEO_DURATION : undefined,
+  frame_byte_length: Math.ceil((WIDTH * HEIGHT) / 8),
+  binary_size: output.length,
+};
+
 writeFileSync(BIN_OUTPUT, output);
 console.log(
   `✅ Wrote ${files.length} frames to ${BIN_OUTPUT} (${output.length} bytes)`,
 );
+
+writeFileSync(META_OUTPUT, JSON.stringify(metadata, null, 2));
+console.log(`📝 Metadata saved to ${META_OUTPUT}`);

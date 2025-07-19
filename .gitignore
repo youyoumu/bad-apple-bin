@@ -1,6 +1,7 @@
 node_modules
 frames/*
 bad-apple-pixel-frame.bin
+bad-apple-pixel-frame.json
 bad-apple-pixel-frame.bin.gz
 
 
